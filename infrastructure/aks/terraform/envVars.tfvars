@@ -1,6 +1,6 @@
 tags = {PURPOSE = "AUTOMATION", ENVIRONMENT = "PRODUCTION"}
 location = "West Europe"
-resource_group_name = "devsecops-cluster-new"
+resource_group_name = "devsecops-cluster"
 cluster_name = "devsecops-cluster"
 admin_group_name = "admins"
 

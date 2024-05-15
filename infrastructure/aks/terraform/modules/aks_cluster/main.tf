@@ -2,6 +2,9 @@ resource "azurerm_user_assigned_identity" "kubelet_identity" {
   name                = "${var.cluster_name}-agentpool-identity"
   location            = var.location
   resource_group_name = var.resource_group_name
+  provisioner "local-exec" {
+    command = "sleep 15"
+  }
 }
 
 resource "azurerm_kubernetes_cluster" "aks" {
@@ -75,7 +78,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
 }
 
 resource "azurerm_role_assignment" "kubelet_identity_role" {
-  scope                = azurerm_kubernetes_cluster.aks.node_resource_group
+  scope                = azurerm_kubernetes_cluster.aks.node_resource_group_id
   role_definition_name = "Managed Identity Operator"
   principal_id         = azurerm_user_assigned_identity.kubelet_identity.principal_id
   depends_on = [
