@@ -29,21 +29,37 @@
         file: "{{ playbook_dir }}/plays/set_group.yml"
 
     - name: Init terraform
-      ansible.builtin.command: terraform init
+      ansible.builtin.command: terraform init -upgrade
       changed_when: false
       args:
         chdir: "{{ playbook_dir }}/terraform_outputs"
 
-    - name: Terraform plan
-      ansible.builtin.command: |
-        terraform plan -var-file=envVars.tfvars --out tfplan
-      changed_when: false
-      args:
-        chdir: "{{ playbook_dir }}/terraform_outputs"
+    - name: Terraform plan and apply
+      block:
+        - name: Terraform plan
+          ansible.builtin.command: |
+            terraform plan -var-file=envVars.tfvars --out tfplan
+          register: result_plan
+          changed_when: false
+          args:
+            chdir: "{{ playbook_dir }}/terraform_outputs"
 
-    - name: Terraform Apply
-      ansible.builtin.command: |
-        terraform apply tfplan
-      changed_when: false
-      args:
-        chdir: "{{ playbook_dir }}/terraform_outputs"
+        - name: Terraform apply
+          ansible.builtin.command: |
+            terraform apply tfplan
+          register: result_apply
+          changed_when: false
+          args:
+            chdir: "{{ playbook_dir }}/terraform_outputs"
+      rescue:
+        - name: Retry block
+          ansible.builtin.command: |
+            terraform plan -var-file=envVars.tfvars --out tfplan
+            terraform apply tfplan
+          register: result_plan
+          changed_when: false
+          args:
+            chdir: "{{ playbook_dir }}/terraform_outputs"
+          until: result_plan is succeeded and result_apply is succeeded
+          retries: 3
+          delay: 5

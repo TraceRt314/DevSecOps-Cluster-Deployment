@@ -22,7 +22,6 @@ resource "azurerm_kubernetes_cluster" "aks" {
     max_count          = 5
     min_count          = 2
     max_pods           = 110
-    node_taints        = ["CriticalAddonsOnly=true:NoSchedule"]
     orchestrator_version = var.kubernetes_version
     os_disk_type = "Ephemeral"
     kubelet_disk_type = "OS"
@@ -41,17 +40,12 @@ resource "azurerm_kubernetes_cluster" "aks" {
     network_policy = "calico"
     load_balancer_sku = "standard"
     outbound_type = "managedNATGateway"
-    service_cidr = "10.0.0.0/16"
   }
 
   azure_active_directory_role_based_access_control {
     managed = true
     admin_group_object_ids = [var.admin_group_id]
     azure_rbac_enabled = false
-  }
-
-  windows_profile {
-    admin_username = var.admin_username
   }
 
 
