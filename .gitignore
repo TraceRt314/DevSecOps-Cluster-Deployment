@@ -1,0 +1,9 @@
+__pycache__
+.bashrc
+.terraform.d
+.terraform
+.terraform.lock.hcl
+.azure
+.ansible
+terraform.tfstate
+tfplan

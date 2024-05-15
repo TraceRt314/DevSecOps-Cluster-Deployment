@@ -1,0 +1,23 @@
+---
+- name: Set-up AKS Cluster
+  hosts: localhost
+  tasks:
+    - name: Init terraform
+      ansible.builtin.command: terraform init
+      changed_when: false
+      args:
+        chdir: "{{ playbook_dir }}/terraform"
+
+    - name: Terraform plan
+      ansible.builtin.command: |
+        terraform plan -var-file=envVars --out tfplan
+      changed_when: false
+      args:
+        chdir: "{{ playbook_dir }}/terraform"
+
+    - name: Terraform Apply
+      ansible.builtin.command: |
+        terraform apply tfplan
+      changed_when: false
+      args:
+        chdir: "{{ playbook_dir }}/terraform"
