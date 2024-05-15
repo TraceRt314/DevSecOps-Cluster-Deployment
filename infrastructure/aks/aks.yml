@@ -36,7 +36,7 @@
 
     - name: Terraform plan
       ansible.builtin.command: |
-        terraform plan -var-file=envVars --out tfplan
+        terraform plan -var-file=envVars.tfvars --out tfplan
       changed_when: false
       args:
         chdir: "{{ playbook_dir }}/terraform_outputs"

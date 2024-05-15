@@ -13,9 +13,9 @@ variable "resource_group_name" {
   description = "Name of the Resource Group to bundle all the resources."
 }
 
-variable "admin_group_name" {
+variable "admin_group_id" {
   type = string
-  description = "Name of the Microsoft Entra ID group created with Cluster Admin role mapping."
+  description = "ID for the admin group."
 }
 
 variable "cluster_name" {
