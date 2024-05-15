@@ -1,11 +1,12 @@
 output "entra_id_group_id" {
   description = "The created Microsoft Entra ID object ID"
-  value = module.entra_id_group.entra_id_group_id
+  value = module.azuread_group.entra_id_group_id
 }
 
 output "kube_config" {
   description = "Kube config output"
   value       = module.azurerm_kubernetes_cluster.kube_config
+  sensitive = true
 }
 
 output "fqdn" {

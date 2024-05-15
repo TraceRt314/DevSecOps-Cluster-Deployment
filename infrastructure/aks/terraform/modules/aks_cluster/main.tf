@@ -32,14 +32,16 @@ resource "azurerm_kubernetes_cluster" "aks" {
     }
   }
 
+  identity {
+    type = "SystemAssigned"
+  }
+
   network_profile {
     network_plugin = "azure"
     network_policy = "calico"
-    network_dataplane = "azure"
-    load_balancer_sku = "Standard"
-    outbound_type = "managedNatGateway"
+    load_balancer_sku = "standard"
+    outbound_type = "managedNATGateway"
     service_cidr = "10.0.0.0/16"
-    ip_versions = ["IPv4"]
   }
 
   azure_active_directory_role_based_access_control {
@@ -75,13 +77,11 @@ resource "azurerm_kubernetes_cluster" "aks" {
     skip_nodes_with_system_pods = "true"
   }
 
-  tags = {
-    environment = "devsecops"
-  }
+  tags = var.tags
 }
 
 resource "azurerm_role_assignment" "kubelet_identity_role" {
-  scope                = azurerm_kubernetes_cluster.aks.node_resource_group_id
+  scope                = azurerm_kubernetes_cluster.aks.node_resource_group
   role_definition_name = "Managed Identity Operator"
   principal_id         = azurerm_user_assigned_identity.kubelet_identity.principal_id
   depends_on = [
