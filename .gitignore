@@ -7,3 +7,5 @@ __pycache__
 .ansible
 terraform.tfstate
 tfplan
+.bash_history
+terraform_outputs

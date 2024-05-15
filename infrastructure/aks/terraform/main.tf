@@ -4,3 +4,8 @@ module "azurerm_resource_group" {
   location = var.location
   tags = var.tags
 }
+
+module "azuread_group" {
+  source = "./modules/entra_id_group"
+  admin_group_name  = var.admin_group_name
+}

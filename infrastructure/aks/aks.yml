@@ -24,6 +24,10 @@
         delete: true
         recursive: true
 
+    - name: Prepare Microsoft Entra ID group creation
+      ansible.builtin.include_tasks:
+        file: "{{ playbook_dir }}/plays/set_group.yml"
+
     - name: Init terraform
       ansible.builtin.command: terraform init
       changed_when: false

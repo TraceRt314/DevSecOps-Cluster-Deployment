@@ -1,0 +1,9 @@
+- name: Get current user id
+  ansible.builtin.command: az ad signed-in-user show --query id -o tsv
+  register: user_id
+
+- name: Replace OBJECT_ID_TO_REPLACE with user_id
+  ansible.builtin.replace:
+    path: "{{ playbook_dir }}/terraform_outputs/modules/entra_id_group/main.tf"
+    regexp: 'OBJECT_ID_TO_REPLACE'
+    replace: "{{ user_id.stdout }}"

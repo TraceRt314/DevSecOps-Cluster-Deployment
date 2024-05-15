@@ -34,7 +34,7 @@ RUN ansible-galaxy collection install amazon.aws
 
 RUN pip install boto3 botocore
 
-RUN ansible-galaxy collection install ansible.posix
+RUN ansible-galaxy collection install ansible.posix && apt-get install rsync -y
 
 RUN apt-get update \
   && apt-get install -y jq

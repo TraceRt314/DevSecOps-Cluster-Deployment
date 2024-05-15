@@ -8,6 +8,7 @@
     - [3 - Build the infrastructure provisioner docker image](#3---build-the-infrastructure-provisioner-docker-image)
       - [4 - Ensure exec permissions over `entrypoint.sh`](#4---ensure-exec-permissions-over-entrypointsh)
       - [5 - Run docker container for provision](#5---run-docker-container-for-provision)
+  - [Expected Outputs](#expected-outputs)
 
 
 This folder contains the `IaC Terraform definition for setting AKS` with just a single CLI utility.
@@ -52,3 +53,7 @@ chmod +x entrypoint.sh
 ```bash
 docker run -it --name aks-provisioner --rm -v "$(pwd)":/app -v "${HOME}/.azure":/app/.azure -e VERBOSITY="-vv" cluster-provider:1.0
 ```
+
+## Expected Outputs
+
+The following set of resources would be available for the user.
