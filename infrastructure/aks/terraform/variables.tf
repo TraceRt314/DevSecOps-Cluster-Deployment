@@ -12,3 +12,9 @@ variable "resource_group_name" {
   type = string
   description = "Name of the Resource Group to bundle all the resources."
 }
+
+variable "cluster_name" {
+  type = string
+  description = "Name of the kubernetes cluster to set-up."
+}
+
