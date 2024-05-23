@@ -63,3 +63,18 @@ variable "client_id" {
   type        = string
   default     = "msi"
 }
+
+variable "vnet_name" {
+  description = "Name of the VNet."
+  type        = string
+}
+
+variable "vnet_address_space" {
+  description = "Address space of the VNet."
+  type        = list(string)
+} 
+
+variable "subnets" {
+  description = "Map of subnets."
+  type        = map(string)
+}
