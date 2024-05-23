@@ -9,3 +9,5 @@ terraform.tfstate
 tfplan
 .bash_history
 terraform_outputs
+.env*
+.gitkeep
