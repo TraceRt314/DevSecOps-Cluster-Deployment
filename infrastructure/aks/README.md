@@ -8,6 +8,7 @@
     - [3 - Build the infrastructure provisioner docker image](#3---build-the-infrastructure-provisioner-docker-image)
     - [4 - Ensure exec permissions over `entrypoint.sh`](#4---ensure-exec-permissions-over-entrypointsh)
     - [5 - Run docker container for provision](#5---run-docker-container-for-provision)
+  - [Connection to the cluster](#connection-to-the-cluster)
   - [VNet peering](#vnet-peering)
     - [Pre-requisites](#pre-requisites)
 
@@ -33,7 +34,7 @@ Make sure to have Docker CE installed in your local machine. For further referen
 1. Login with Azure CLI:
 
 ```bash
-az login --use-device-code
+az login --use-device-code --tenant <TENANT_ID>
 ```
 
 ### 3 - Build the infrastructure provisioner docker image
@@ -49,10 +50,36 @@ docker build ../docker -f ../docker/Dockerfile.provisioner -t cluster-provider:1
 chmod +x entrypoint.sh
 ```
 
+> \[!IMPORTANT\]
+> (WIP) By default, this entrypoint generates the cluster provisioning process. If you want to restart the process from scratch or delete everything and start over, replace `aks.yml` with `aks_destroy.yml` in the `entrypoint.sh` script.
+
 ### 5 - Run docker container for provision
 
 ```bash
 docker run -it --name aks-provisioner --rm -v "$(pwd)":/app -v "${HOME}/.azure":/app/.azure -e VERBOSITY="-vv" cluster-provider:1.0
+```
+
+## Connection to the cluster
+
+After the deployment, you can connect to the cluster by completing the following steps:
+
+1. Install `kubectl`, `kubelogin` and `az` CLI tools.
+2. (Only if needed) Setup your azure account:
+
+```bash
+az account set --subscription <SUBSCRIPTION_ID>
+```
+
+3. Retrieve the credentials for the cluster:
+
+```bash
+az aks get-credentials --resource-group <RESOURCE_GROUP> --name <CLUSTER_NAME>
+```
+
+4. Check the connection to the cluster:
+
+```bash
+kubectl get nodes
 ```
 
 ## VNet peering
