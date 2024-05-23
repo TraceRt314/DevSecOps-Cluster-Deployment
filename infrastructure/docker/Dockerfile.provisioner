@@ -49,8 +49,8 @@ ARG DIR="/app"
 WORKDIR ${DIR}
 ARG UID="1000"
 ARG GID="1000"
-ARG GROUP="perico"
-ARG USER="perico"
+ARG GROUP="devsecops"
+ARG USER="devsecops"
 
 ###################### USER CREATION ##################
 
