@@ -1,0 +1,6 @@
+controller:
+  service:
+    type: NodePort
+    nodePorts:
+      http: "{{ http_ingress_nginx_port }}"
+      https: "{{ https_ingress_nginx_port }}"
