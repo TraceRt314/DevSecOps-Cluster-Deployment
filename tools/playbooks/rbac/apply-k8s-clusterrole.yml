@@ -1,0 +1,10 @@
+---
+- name: Apply Kubernetes manifests
+  hosts: localhost
+  tasks:
+    - name: Replace ADMIN_GROUP variable in ClusterRole and ClusterRoleBinding manifests and apply them
+      shell: |
+        sed 's/${ADMIN_GROUP}/{{ ADMIN_GROUP }}/g' {{ DEST_PATH }}/{{ item }} | kubectl apply -f -
+      with_items:
+        - "admin-clusterrolebinding.yaml"
+

@@ -1,0 +1,16 @@
+kind: Role
+apiVersion: rbac.authorization.k8s.io/v1
+metadata:
+  name: REPLACE-NS-ROLE-user-full-access
+  namespace: REPLACE-NAMESPACE
+rules:
+- apiGroups: [""]
+  resources: ["pods", "persistentvolumes", "persistentvolumesclaims", "secrets", "configmaps", "services", "endpoints"]
+  verbs: ["get", "list"]
+- apiGroups: ["apps"]
+  resources: ["deployments", "statefulsets", "daemonsets", "replicasets"]
+  verbs: ["get", "list"]
+- apiGroups: ["networking.k8s.io"]
+  resources: ["ingresses", "networkpolicies"]
+  verbs: ["get", "list"]
+
