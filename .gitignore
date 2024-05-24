@@ -11,3 +11,4 @@ tfplan
 terraform_outputs
 .env*
 .gitkeep
+.kube
