@@ -1,0 +1,14 @@
+---
+- hosts: localhost 
+  tasks:
+    - name: Add Prometheus Helm repository
+      command: "helm repo add prometheus-community https://prometheus-community.github.io/helm-charts"
+      args:
+        creates: "$HOME/.cache/helm/repository/prometheus-community-index.yaml"
+
+    - name: Update Helm repositories
+      command: "helm repo update"
+
+    - name: Install Prometheus using Helm
+      command: "helm install prometheus prometheus-community/prometheus --namespace prometheus --kubeconfig $HOME/.kube/config"
+      ignore_errors: yes

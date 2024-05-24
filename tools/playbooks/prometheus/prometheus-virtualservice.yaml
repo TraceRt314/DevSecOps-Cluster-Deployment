@@ -1,0 +1,21 @@
+
+apiVersion: networking.istio.io/v1beta1
+kind: VirtualService
+metadata:
+  name: prometheus-vs
+  namespace: prometheus
+spec:
+  gateways:
+  - istio-system/https-gateway
+  hosts:
+  - prometheus.code-triarii.com
+  http:
+  - match:
+    - uri:
+        prefix: /
+    route:
+    - destination:
+        host: prometheus-server
+        port:
+          number: 80
+
