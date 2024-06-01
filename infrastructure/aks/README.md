@@ -9,6 +9,7 @@
     - [4 - Ensure exec permissions over `entrypoint.sh`](#4---ensure-exec-permissions-over-entrypointsh)
     - [5 - Run docker container for provision](#5---run-docker-container-for-provision)
   - [Connection to the cluster](#connection-to-the-cluster)
+  - [Cluster exposure](#cluster-exposure)
   - [VNet peering](#vnet-peering)
     - [Pre-requisites](#pre-requisites)
 
@@ -80,6 +81,16 @@ az aks get-credentials --resource-group <RESOURCE_GROUP> --name <CLUSTER_NAME>
 
 ```bash
 kubectl get nodes
+```
+
+## Cluster exposure
+
+By default, `private_cluster_enabled` property is set to `true`. This means that the cluster is not exposed to the internet. If you want to expose it, you can set the property to `false` in `envVars` file.
+
+Since the property `public_network_access_enabled` is deprecated and no longer supported by Azure API, the AKS will be created with the `public_network_access_enabled` property set to `true` by default. If your security requirements do not allow this, you can execute the following command to disable it:
+
+```bash
+az aks update --resource-group <RESOURCE_GROUP> --name <CLUSTER_NAME> --disable-public-network
 ```
 
 ## VNet peering

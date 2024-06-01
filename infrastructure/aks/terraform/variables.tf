@@ -82,5 +82,5 @@ variable "subnets" {
 variable "private_cluster_enabled" {
   description = "Enable private cluster."
   type        = bool
-  default     = false
+  default     = true
 }

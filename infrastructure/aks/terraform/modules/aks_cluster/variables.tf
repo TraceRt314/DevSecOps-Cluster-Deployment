@@ -3,11 +3,6 @@ variable "tags" {
   description = "General Tags that will be applied to all the resources generated"
 }
 
-variable "private_cluster_enabled" {
-  description = "Enable private cluster."
-  type        = bool
-}
-
 variable "location" {
   type = string
   description = "Region/Location for the resources to be created."
@@ -67,4 +62,9 @@ variable "client_id" {
   description = "client id for the service principal."
   type        = string
   default     = "msi"
+}
+
+variable "private_cluster_enabled" {
+  description = "Enable private cluster."
+  type        = bool
 }
