@@ -1,6 +1,3 @@
-FROM hashicorp/terraform:1.7 as terraform
-
-
 FROM ubuntu:jammy-20240227
 
 # This are the environment variables used for Terraform authentication.
@@ -11,12 +8,8 @@ ENV AWS_SECRET_ACCESS_KEY=""
 ENV AWS_REGION="eu-west-2"
 ENV VERBOSITY="--vvv"
 
-
 # Installing required dependencies
 RUN apt-get update && apt-get install -y git software-properties-common wget curl unzip gnupg-agent gnupg
-
-COPY --from=terraform /bin/terraform /bin/terraform
-
 
 ###################### ANSIBLE BLOCK ##################
 

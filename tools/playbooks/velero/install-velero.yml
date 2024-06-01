@@ -1,0 +1,58 @@
+---
+- name: Install Velero and configure StorageAccount
+  hosts: masters
+  vars_files:
+    - ../../vault.yml
+  vars:
+    velero_version: "v1.12.1" #TODO: Check if this is the latest version
+    velero_install_dir: "/usr/local/bin"
+    velero_plugin_version: "v1.8.1"
+  become: yes
+  tasks:
+    - name: Download Velero
+      get_url:
+        url: "https://github.com/vmware-tanzu/velero/releases/download/{{ velero_version }}/velero-{{ velero_version }}-linux-amd64.tar.gz"
+        dest: "/tmp/velero-{{ velero_version }}-linux-amd64.tar.gz"
+        validate_certs: yes
+
+    - name: Extract Velero
+      command: tar -xvf /tmp/velero-{{ velero_version }}-linux-amd64.tar.gz -C /tmp
+
+    - name: Move Velero binary to install directory
+      command: mv /tmp/velero-{{ velero_version }}-linux-amd64/velero {{ velero_install_dir }}/velero
+
+    - name: Create Velero directory for credentials
+      file:
+        path: /etc/velero
+        state: directory
+        mode: "0755"
+
+    - name: Create Velero credentials from template
+      template:
+        src: credentials-velero.j2
+        dest: "/etc/velero/credentials-velero"
+
+    - name: Set Velero binary as executable
+      file:
+        path: "{{ velero_install_dir }}/velero"
+        mode: "0755"
+
+    #NOTE: --snapshot-location-config resourceGroup is the project resource group
+    #NOTE: --backup-location-config resourceGroup is the velero resource group
+    #TODO: Check why this does not work correctly
+
+    - name: Debug Velero Install Command
+      debug:
+        msg: >
+          velero install \
+          --provider azure \
+          --plugins velero/velero-plugin-for-microsoft-azure:{{ velero_plugin_version }} \
+          --bucket {{ velero_bucket_name }} \
+          --secret-file /etc/velero/credentials-velero \
+          --backup-location-config resourceGroup={{ velero_resource_group_name }},storageAccount={{ velero_storage_account_id }} \
+          --snapshot-location-config apiTimeout=120,resourceGroup={{ resource_group_name }}
+          
+    - name: Install Velero in the cluster
+      command: velero install --provider azure --plugins velero/velero-plugin-for-microsoft-azure:{{ velero_plugin_version }} --bucket {{ velero_bucket_name }} --secret-file /etc/velero/credentials-velero --backup-location-config resourceGroup={{ velero_resource_group_name }},storageAccount={{ velero_storage_account_id }} --snapshot-location-config apiTimeout=120,resourceGroup={{ resource_group_name }} 
+      args:
+        creates: "/etc/velero/credentials-velero"

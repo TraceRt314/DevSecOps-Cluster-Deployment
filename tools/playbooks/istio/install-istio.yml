@@ -1,0 +1,23 @@
+---
+- name: Install and Configure Istio
+  hosts: masters
+  become: yes
+  tasks:
+    - name: Download Istio #TODO: Update to latest version
+      shell: |
+        curl -L https://istio.io/downloadIstio | ISTIO_VERSION=1.19.3 TARGET_ARCH=x86_64 sh -
+      args:
+        executable: /bin/bash
+
+    - name: Install Istio with NodePort ingress gateway
+      shell: |
+        ./istio-1.19.3/bin/istioctl install --set profile=default -y --set values.gateways.istio-ingressgateway.type=NodePort
+      args:
+        executable: /bin/bash
+
+    - name: Enable Istio injection for specified namespaces
+      command: kubectl label namespace {{ item }} istio-injection=enabled --overwrite
+      loop:
+        - prometheus
+        - grafana
+        - velero

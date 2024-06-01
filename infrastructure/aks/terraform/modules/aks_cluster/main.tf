@@ -13,6 +13,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   resource_group_name = var.resource_group_name
   dns_prefix          = var.dns_prefix
   kubernetes_version  = var.kubernetes_version
+  private_cluster_enabled = var.private_cluster_enabled
 
   default_node_pool {
     name            = "agentpool"
@@ -48,7 +49,7 @@ resource "azurerm_kubernetes_cluster" "aks" {
   azure_active_directory_role_based_access_control {
     managed = true
     admin_group_object_ids = [var.admin_group_id]
-    azure_rbac_enabled = false
+    azure_rbac_enabled = true 
   }
 
 

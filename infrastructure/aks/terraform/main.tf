@@ -41,6 +41,7 @@ module "azurerm_kubernetes_cluster" {
   node_os_disk_size_gb = var.node_os_disk_size_gb
   admin_username = var.admin_username
   client_id = var.client_id
+  private_cluster_enabled = var.private_cluster_enabled
   depends_on = [
     module.azuread_group,
     module.azurerm_virtual_network,

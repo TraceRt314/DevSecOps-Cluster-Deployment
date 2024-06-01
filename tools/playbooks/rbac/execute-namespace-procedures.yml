@@ -1,0 +1,35 @@
+---
+- hosts: localhost
+  vars:
+    - project_name: "{{ project_name }}"
+    - scripts:
+      - create-namespace.py
+      - delete-namespace.py
+      - manifests/rolebinding-namespace-template.yaml
+      - manifests/Admin-role-namespace-template.yaml
+      - manifests/Coord-role-namespace-template.yaml
+      - manifests/Viewer-role-namespace-template.yaml
+    - namespaces:
+      - testing
+  tasks:
+    - name: Execute create-namespace.py
+      ansible.builtin.command:
+        cmd: "python3 {{ scripts[0] }} --namespace_name {{ item }} --project_name {{ project_name }}"
+      with_items: "{{ namespaces }}"
+    
+    #- name: Execute delete-namespace.py
+    #  ansible.builtin.command:
+    #    cmd: "python3 {{ scripts[1] }} --namespace_name {{ item }} --project_name {{ project_name }}"
+    #  with_items: "{{ namespaces }}"
+    #  args:
+    #    chdir: "/root/"
+    #  tags:
+    #    - delete
+
+    - name: Print completion message
+      debug:
+        msg: "Namespaces created."
+      tags:
+        - always
+
+

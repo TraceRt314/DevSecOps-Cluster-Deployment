@@ -1,0 +1,101 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"dependencytrack-postgres-s-sca"},"name":"dependencytrack-postgres-s-sca","namespace":"s-sca"},"spec":{"ports":[{"name":"p1","port":5432}],"selector":{"app":"dependencytrack-postgres-s-sca"},"type":"ClusterIP"}}
+    creationTimestamp: "2023-11-20T13:43:59Z"
+    labels:
+      app: dependencytrack-postgres-s-sca
+    name: dependencytrack-postgres-s-sca
+    namespace: s-sca
+    resourceVersion: "2283243"
+    uid: 4aef734b-95ff-4568-aca1-3331b8500152
+  spec:
+    clusterIP: 10.99.5.34
+    clusterIPs:
+    - 10.99.5.34
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: p1
+      port: 5432
+      protocol: TCP
+      targetPort: 5432
+    selector:
+      app: dependencytrack-postgres-s-sca
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"dependencytrack-s-sca"},"name":"dependencytrack-s-sca","namespace":"s-sca"},"spec":{"ports":[{"name":"p1","port":8080,"targetPort":8080}],"selector":{"app":"dependencytrack-s-sca"},"type":"ClusterIP"}}
+    creationTimestamp: "2023-11-20T13:43:59Z"
+    labels:
+      app: dependencytrack-s-sca
+    name: dependencytrack-s-sca
+    namespace: s-sca
+    resourceVersion: "2283214"
+    uid: ae1e3e18-025d-4d05-86b2-08b6f7f9edb7
+  spec:
+    clusterIP: 10.105.85.200
+    clusterIPs:
+    - 10.105.85.200
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: p1
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: dependencytrack-s-sca
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+- apiVersion: v1
+  kind: Service
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"Service","metadata":{"annotations":{},"labels":{"app":"dependencytrackfront-s-sca"},"name":"dependencytrackfront-s-sca","namespace":"s-sca"},"spec":{"ports":[{"name":"p1","port":8080,"targetPort":8080}],"selector":{"app":"dependencytrackfront-s-sca"},"type":"ClusterIP"}}
+    creationTimestamp: "2023-11-20T13:43:59Z"
+    labels:
+      app: dependencytrackfront-s-sca
+    name: dependencytrackfront-s-sca
+    namespace: s-sca
+    resourceVersion: "2283223"
+    uid: 00f5bf13-ebb5-45fa-b9a2-8091d40e5328
+  spec:
+    clusterIP: 10.110.54.60
+    clusterIPs:
+    - 10.110.54.60
+    internalTrafficPolicy: Cluster
+    ipFamilies:
+    - IPv4
+    ipFamilyPolicy: SingleStack
+    ports:
+    - name: p1
+      port: 8080
+      protocol: TCP
+      targetPort: 8080
+    selector:
+      app: dependencytrackfront-s-sca
+    sessionAffinity: None
+    type: ClusterIP
+  status:
+    loadBalancer: {}
+kind: List
+metadata:
+  resourceVersion: ""

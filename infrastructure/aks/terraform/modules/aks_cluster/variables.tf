@@ -59,7 +59,12 @@ variable "admin_username" {
 }
 
 variable "client_id" {
-  description = "Client ID for the service principal."
+  description = "client id for the service principal."
   type        = string
   default     = "msi"
+}
+
+variable "private_cluster_enabled" {
+  description = "Enable private cluster."
+  type        = bool
 }

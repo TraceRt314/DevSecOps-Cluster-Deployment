@@ -78,3 +78,9 @@ variable "subnets" {
   description = "Map of subnets."
   type        = map(string)
 }
+
+variable "private_cluster_enabled" {
+  description = "Enable private cluster."
+  type        = bool
+  default     = true
+}

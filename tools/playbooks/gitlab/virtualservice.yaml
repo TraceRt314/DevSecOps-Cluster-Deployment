@@ -1,0 +1,31 @@
+apiVersion: v1
+items:
+- apiVersion: networking.istio.io/v1beta1
+  kind: VirtualService
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.istio.io/v1beta1","kind":"VirtualService","metadata":{"annotations":{},"name":"gitlab-vs","namespace":"gitlab"},"spec":{"gateways":["istio-system/https-gateway"],"hosts":["gitlab.code-triarii.com"],"http":[{"match":[{"uri":{"prefix":"/"}}],"route":[{"destination":{"host":"gitlab","port":{"number":80}}}]}]}}
+    creationTimestamp: "2024-03-07T16:29:44Z"
+    generation: 1
+    name: gitlab-vs
+    namespace: gitlab
+    resourceVersion: "50174124"
+    uid: f4ed180d-63ca-42fa-a0bd-21999466960f
+  spec:
+    gateways:
+    - istio-system/https-gateway
+    hosts:
+    - gitlab.code-triarii.com
+    http:
+    - match:
+      - uri:
+          prefix: /
+      route:
+      - destination:
+          host: gitlab
+          port:
+            number: 80
+kind: List
+metadata:
+  resourceVersion: ""

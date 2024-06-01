@@ -1,0 +1,14 @@
+---
+- hosts: localhost 
+  tasks:
+    - name: Add Grafana Helm repository
+      command: "helm repo add grafana https://grafana.github.io/helm-charts"
+      args:
+        creates: "$HOME/.cache/helm/repository/grafana-index.yaml"
+
+    - name: Update Helm repositories
+      command: "helm repo update"
+
+    - name: Install Grafana using Helm
+      command: "helm install grafana grafana/grafana --namespace grafana -f $HOME/DevSecOps-Cluster-Deployment/tools/playbooks/grafana/grafana-values.yaml"
+      ignore_errors: yes

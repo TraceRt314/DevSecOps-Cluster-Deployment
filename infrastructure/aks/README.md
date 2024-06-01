@@ -9,8 +9,10 @@
     - [4 - Ensure exec permissions over `entrypoint.sh`](#4---ensure-exec-permissions-over-entrypointsh)
     - [5 - Run docker container for provision](#5---run-docker-container-for-provision)
   - [Connection to the cluster](#connection-to-the-cluster)
+  - [Cluster exposure](#cluster-exposure)
   - [VNet peering](#vnet-peering)
     - [Pre-requisites](#pre-requisites)
+  - [DNS Zone link](#dns-zone-link)
 
 
 This folder contains the `IaC Terraform definition for setting AKS` with just a single CLI utility.
@@ -82,6 +84,16 @@ az aks get-credentials --resource-group <RESOURCE_GROUP> --name <CLUSTER_NAME>
 kubectl get nodes
 ```
 
+## Cluster exposure
+
+By default, `private_cluster_enabled` property is set to `true`. This means that the cluster is not exposed to the internet. If you want to expose it, you can set the property to `false` in `envVars` file.
+
+Since the property `public_network_access_enabled` is deprecated and no longer supported by Azure API, the AKS will be created with the `public_network_access_enabled` property set to `true` by default. If your security requirements do not allow this, you can execute the following command to disable it:
+
+```bash
+az aks update --resource-group <RESOURCE_GROUP> --name <CLUSTER_NAME> --disable-public-network
+```
+
 ## VNet peering
 
 > \[!CAUTION\]
@@ -129,4 +141,20 @@ python3 vnet_peering_setup.py --cluster_vnet myClusterVNet --cluster_rg myCluste
 
 > \[!IMPORTANT\]
 > Note that the cluster resource group is the **Automatically Generated when creating the cluster, not the one inputted to the terraform**. E.g. `MC_devsecops-cluster_devsecops-cluster_westeurope`
+
+
+## DNS Zone link
+
+If you want to link the vnet to a private DNS Zone, you can use the following command:
+
+```bash
+VNET_ID=$(az network vnet show -g rg-network -n MyVNet --query "id" -o tsv)
+
+az network private-dns link vnet create \
+  -g rg-dns \
+  -n MyDNSLink \
+  -z $DNS_ZONE_ID \
+  -v $VNET_ID \
+  -e True
+```
 

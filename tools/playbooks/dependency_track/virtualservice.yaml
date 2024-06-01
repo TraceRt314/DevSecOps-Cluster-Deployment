@@ -1,0 +1,57 @@
+apiVersion: v1
+items:
+- apiVersion: networking.istio.io/v1beta1
+  kind: VirtualService
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.istio.io/v1beta1","kind":"VirtualService","metadata":{"annotations":{},"name":"dependency-track-api-vs","namespace":"s-sca"},"spec":{"gateways":["istio-system/https-gateway"],"hosts":["dependency-track.code-triarii.com"],"http":[{"match":[{"uri":{"prefix":"/api"}}],"route":[{"destination":{"host":"dependencytrack-s-sca","port":{"number":8080}}}]}]}}
+    creationTimestamp: "2023-11-20T14:19:21Z"
+    generation: 1
+    name: dependency-track-api-vs
+    namespace: s-sca
+    resourceVersion: "2319603"
+    uid: e846d15c-65c8-401f-ba80-fe38267acd25
+  spec:
+    gateways:
+    - istio-system/https-gateway
+    hosts:
+    - dependency-track.code-triarii.com
+    http:
+    - match:
+      - uri:
+          prefix: /api
+      route:
+      - destination:
+          host: dependencytrack-s-sca
+          port:
+            number: 8080
+- apiVersion: networking.istio.io/v1beta1
+  kind: VirtualService
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"networking.istio.io/v1beta1","kind":"VirtualService","metadata":{"annotations":{},"name":"dependency-track-vs","namespace":"s-sca"},"spec":{"gateways":["istio-system/https-gateway"],"hosts":["dependency-track.code-triarii.com"],"http":[{"match":[{"uri":{"prefix":"/"}}],"route":[{"destination":{"host":"dependencytrackfront-s-sca","port":{"number":8080}}}]}]}}
+    creationTimestamp: "2023-11-20T14:19:21Z"
+    generation: 1
+    name: dependency-track-vs
+    namespace: s-sca
+    resourceVersion: "2319602"
+    uid: 7942dc85-34e0-4454-8d61-8fca8b6dccd1
+  spec:
+    gateways:
+    - istio-system/https-gateway
+    hosts:
+    - dependency-track.code-triarii.com
+    http:
+    - match:
+      - uri:
+          prefix: /
+      route:
+      - destination:
+          host: dependencytrackfront-s-sca
+          port:
+            number: 8080
+kind: List
+metadata:
+  resourceVersion: ""

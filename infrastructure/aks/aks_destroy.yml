@@ -1,0 +1,48 @@
+- name: Destroy AKS Cluster
+  hosts: localhost
+  tasks:
+    - name: Ensure directory exists and is empty
+      ansible.builtin.file:
+        path: "{{ playbook_dir }}/terraform_outputs"
+        state: directory
+        mode: '0755'
+      register: dir
+
+    - name: Remove all files from directory
+      ansible.builtin.file:
+        path: "{{ item }}"
+        state: absent
+      with_fileglob:
+        - "{{ playbook_dir }}/terraform_outputs/*"
+      when: dir.changed # noqa: no-handler
+
+    - name: Ensure 'terraform' directory is copied to 'terraform_outputs'
+      ansible.posix.synchronize:
+        src: "{{ playbook_dir }}/terraform/"
+        dest: "{{ playbook_dir }}/terraform_outputs/"
+        delete: true
+        recursive: true
+
+    - name: Prepare Microsoft Entra ID group destruction
+      ansible.builtin.include_tasks:
+        file: "{{ playbook_dir }}/plays/unset_group.yml"
+
+    - name: Init terraform
+      ansible.builtin.command: terraform init -upgrade
+      changed_when: false
+      args:
+        chdir: "{{ playbook_dir }}/terraform_outputs"
+
+    - name: Terraform Plan Destroy
+      ansible.builtin.command: |
+        terraform plan -destroy -var-file=envVars.tfvars --out tfplan-destroy
+      changed_when: false
+      args:
+        chdir: "{{ playbook_dir }}/terraform_outputs"
+
+    - name: Terraform Destroy
+      ansible.builtin.command: |
+        terraform apply tfplan-destroy
+      changed_when: false
+      args:
+        chdir: "{{ playbook_dir }}/terraform_outputs"

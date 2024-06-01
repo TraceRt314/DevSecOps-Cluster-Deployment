@@ -1,0 +1,110 @@
+apiVersion: v1
+items:
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"labels":{"app":"gitlab-config-pvc"},"name":"config-pv-claim","namespace":"gitlab"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"2Gi"}},"storageClassName":"default"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: disk.csi.azure.com
+      volume.kubernetes.io/selected-node: k8s-worker-2
+      volume.kubernetes.io/storage-provisioner: disk.csi.azure.com
+    creationTimestamp: "2024-03-07T16:29:44Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app: gitlab-config-pvc
+    name: config-pv-claim
+    namespace: gitlab
+    resourceVersion: "50174199"
+    uid: b264a357-b260-4f39-b3d5-8b943d82bbb2
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 2Gi
+    storageClassName: default
+    volumeMode: Filesystem
+    volumeName: pvc-b264a357-b260-4f39-b3d5-8b943d82bbb2
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 2Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"labels":{"app":"gitlab-postgres-pvc"},"name":"postgres-pv-claim","namespace":"gitlab"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"20Gi"}},"storageClassName":"default"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: disk.csi.azure.com
+      volume.kubernetes.io/selected-node: iluvatar-wdjtzh
+      volume.kubernetes.io/storage-provisioner: disk.csi.azure.com
+    creationTimestamp: "2024-03-07T16:29:44Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app: gitlab-postgres-pvc
+    name: postgres-pv-claim
+    namespace: gitlab
+    resourceVersion: "50174183"
+    uid: 06fc0bf4-3297-4e6e-9d7f-edc5a14e147e
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 20Gi
+    storageClassName: default
+    volumeMode: Filesystem
+    volumeName: pvc-06fc0bf4-3297-4e6e-9d7f-edc5a14e147e
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 20Gi
+    phase: Bound
+- apiVersion: v1
+  kind: PersistentVolumeClaim
+  metadata:
+    annotations:
+      kubectl.kubernetes.io/last-applied-configuration: |
+        {"apiVersion":"v1","kind":"PersistentVolumeClaim","metadata":{"annotations":{},"labels":{"app":"gitlab-web-pvc"},"name":"web-pv-claim","namespace":"gitlab"},"spec":{"accessModes":["ReadWriteOnce"],"resources":{"requests":{"storage":"30Gi"}},"storageClassName":"default"}}
+      pv.kubernetes.io/bind-completed: "yes"
+      pv.kubernetes.io/bound-by-controller: "yes"
+      volume.beta.kubernetes.io/storage-provisioner: disk.csi.azure.com
+      volume.kubernetes.io/selected-node: k8s-worker-2
+      volume.kubernetes.io/storage-provisioner: disk.csi.azure.com
+    creationTimestamp: "2024-03-07T16:29:44Z"
+    finalizers:
+    - kubernetes.io/pvc-protection
+    labels:
+      app: gitlab-web-pvc
+    name: web-pv-claim
+    namespace: gitlab
+    resourceVersion: "50174206"
+    uid: 6031d010-b72e-4374-bbd0-84a59c667dfa
+  spec:
+    accessModes:
+    - ReadWriteOnce
+    resources:
+      requests:
+        storage: 30Gi
+    storageClassName: default
+    volumeMode: Filesystem
+    volumeName: pvc-6031d010-b72e-4374-bbd0-84a59c667dfa
+  status:
+    accessModes:
+    - ReadWriteOnce
+    capacity:
+      storage: 30Gi
+    phase: Bound
+kind: List
+metadata:
+  resourceVersion: ""

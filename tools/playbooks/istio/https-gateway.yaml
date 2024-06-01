@@ -1,0 +1,19 @@
+apiVersion: networking.istio.io/v1beta1
+kind: Gateway
+metadata:
+  generation: 1
+  name: https-gateway
+  namespace: istio-system
+spec:
+  selector:
+    istio: ingressgateway
+  servers:
+  - hosts:
+    - '*.code-triarii.com'
+    port:
+      name: https-int
+      number: 443
+      protocol: HTTPS
+    tls:
+      credentialName: letsencrypt-code-triarii-secret
+      mode: SIMPLE
