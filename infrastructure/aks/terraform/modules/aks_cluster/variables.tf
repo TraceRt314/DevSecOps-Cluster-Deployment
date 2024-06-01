@@ -6,7 +6,6 @@ variable "tags" {
 variable "private_cluster_enabled" {
   description = "Enable private cluster."
   type        = bool
-  default     = true
 }
 
 variable "location" {
