@@ -12,6 +12,7 @@
   - [Cluster exposure](#cluster-exposure)
   - [VNet peering](#vnet-peering)
     - [Pre-requisites](#pre-requisites)
+  - [DNS Zone link](#dns-zone-link)
 
 
 This folder contains the `IaC Terraform definition for setting AKS` with just a single CLI utility.
@@ -140,4 +141,20 @@ python3 vnet_peering_setup.py --cluster_vnet myClusterVNet --cluster_rg myCluste
 
 > \[!IMPORTANT\]
 > Note that the cluster resource group is the **Automatically Generated when creating the cluster, not the one inputted to the terraform**. E.g. `MC_devsecops-cluster_devsecops-cluster_westeurope`
+
+
+## DNS Zone link
+
+If you want to link the vnet to a private DNS Zone, you can use the following command:
+
+```bash
+VNET_ID=$(az network vnet show -g rg-network -n MyVNet --query "id" -o tsv)
+
+az network private-dns link vnet create \
+  -g rg-dns \
+  -n MyDNSLink \
+  -z $DNS_ZONE_ID \
+  -v $VNET_ID \
+  -e True
+```
 
